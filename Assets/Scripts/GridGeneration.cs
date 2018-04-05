@@ -19,6 +19,7 @@ public class GridGeneration : MonoBehaviour {
                 GameObject spawnedNode = Instantiate(Node);
                 Vector3 spawnedPos = startPos + (Vector3.right * j * 2) + (Vector3.forward * i * 2);
                 spawnedNode.transform.position = spawnedPos;
+                Ray TestRay = 
             }
         }
 	}

@@ -71,7 +71,7 @@ public class EnemySpawner : MonoBehaviour {
             {
                 enemyTimer = 0;
                 GameObject spawnedThing = Instantiate(enemyToSpawn);
-                spawnedThing.transform.position = new Vector3(spawnedThing.transform.position.x, spawnedThing.transform.position.y, spawnedThing.transform.position.z + Random.Range(-9f, 6f));
+                spawnedThing.transform.position = new Vector3(spawnedThing.transform.position.x, spawnedThing.transform.position.y, spawnedThing.transform.position.z + Random.Range(-5f, 3f));
                 currentWaveEnemiesSpawned++;
             }
 

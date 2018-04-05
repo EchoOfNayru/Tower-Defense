@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class MouseInteraction : MonoBehaviour {
 
+    public GameObject wall;
+
+    BasicEnemy enemyClicked;
+    OceanNodeScript OceanNodeClicked;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -14,10 +19,27 @@ public class MouseInteraction : MonoBehaviour {
         if (Input.GetButtonDown("Fire1"))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray))
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
             {
-                Debug.Log("a happeneded");
+                if (hit.collider != null)
+                {
+                    //Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
+
+                    enemyClicked = hit.collider.GetComponent<BasicEnemy>();
+                    if (enemyClicked != null)
+                    {
+                        Destroy(enemyClicked.gameObject);
+                    }
+                    OceanNodeClicked = hit.collider.GetComponent<OceanNodeScript>();
+                    if (OceanNodeClicked != null)
+                    {
+                        Instantiate(wall, hit.collider.transform);
+                    }
+                }
             }  
         }
+
+        enemyClicked = null;
     }
 }
