@@ -8,6 +8,7 @@ public class OceanNodeScript : MonoBehaviour {
     public GameObject nodeDown;
     public GameObject nodeLeft;
     public GameObject nodeRight;
+    public bool isBuilt;
 
     Ray downRay;
     Ray leftRay;
@@ -18,6 +19,7 @@ public class OceanNodeScript : MonoBehaviour {
         downRay.direction = Vector3.forward * -1;
         leftRay.origin = transform.position;
         leftRay.direction = Vector3.right * -1;
+        isBuilt = false;
 
         RaycastHit hit;
         OceanNodeScript downScript;
@@ -25,19 +27,21 @@ public class OceanNodeScript : MonoBehaviour {
 
         if (Physics.Raycast(downRay, out hit))
         {
-            nodeDown = hit.collider.gameObject;
+            
             downScript = hit.collider.GetComponent<OceanNodeScript>();
             if (downScript != null)
             {
+                nodeDown = hit.collider.gameObject;
                 downScript.nodeUp = gameObject;
             }
         }
         if (Physics.Raycast(leftRay, out hit))
         {
-            nodeLeft = hit.collider.gameObject;
+            
             leftScript = hit.collider.GetComponent<OceanNodeScript>();
             if (leftScript != null)
             {
+                nodeLeft = hit.collider.gameObject;
                 leftScript.nodeRight = gameObject;
             }
         }
@@ -45,8 +49,6 @@ public class OceanNodeScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.DrawRay(downRay.origin, downRay.direction, Color.green);
-
         
 	}
 }
