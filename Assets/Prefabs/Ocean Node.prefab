@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 65800154711497940}
   - component: {fileID: 23907199210055692}
   - component: {fileID: 114682942930293350}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ocean Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,3 +111,4 @@ MonoBehaviour:
   nodeDown: {fileID: 0}
   nodeLeft: {fileID: 0}
   nodeRight: {fileID: 0}
+  isBuilt: 0

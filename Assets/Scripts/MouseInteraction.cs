@@ -20,11 +20,15 @@ public class MouseInteraction : MonoBehaviour {
     WallScript wallClicked;
     TowerScript towerClicked;
 
+    LayerMask currentLayerMask;
+    
     // Use this for initialization
     void Start() {
         wallSelected = false;
         destroySelected = false;
         towerSelected = false;
+
+        currentLayerMask = 8;
     }
 
     // Update is called once per frame
@@ -33,7 +37,7 @@ public class MouseInteraction : MonoBehaviour {
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit,100 ,1 << currentLayerMask))
             {
                 if (hit.collider != null)
                 {
@@ -119,6 +123,7 @@ public class MouseInteraction : MonoBehaviour {
         destroyButton.interactable = true;
         towerSelected = false;
         towerButton.interactable = true;
+        currentLayerMask = 8;
     }
 
     public void SetBuilderToDestroy()
@@ -129,6 +134,7 @@ public class MouseInteraction : MonoBehaviour {
         wallButton.interactable = true;
         towerSelected = false;
         towerButton.interactable = true;
+        currentLayerMask = -1;
     }
 
     public void SetBuilderToTower()
@@ -139,5 +145,6 @@ public class MouseInteraction : MonoBehaviour {
         wallButton.interactable = true;
         destroySelected = false;
         destroyButton.interactable = true;
+        currentLayerMask = 8;
     }
 }

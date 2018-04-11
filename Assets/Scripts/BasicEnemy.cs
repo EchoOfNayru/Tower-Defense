@@ -6,8 +6,9 @@ public class BasicEnemy : MonoBehaviour {
 
     public float moveSpeed = 0.2f;
 
-    private PlayerBase playerBase;
-    private float timer;
+    PlayerBase playerBase;
+    BulletScript bullet;
+    float timer;
 
 	// Use this for initialization
 	void Start () {
@@ -33,6 +34,13 @@ public class BasicEnemy : MonoBehaviour {
         {
             playerBase.health--;
             playerBase.OnUpdateHealthUI();
+            Destroy(gameObject);
+        }
+
+        bullet = other.GetComponent<BulletScript>();
+        if (bullet != null)
+        {
+            Destroy(bullet.gameObject);
             Destroy(gameObject);
         }
     }

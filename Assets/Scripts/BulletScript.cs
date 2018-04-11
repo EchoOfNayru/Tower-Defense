@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public float speed;
+    public GameObject target;
+
+    Vector3 dir;
+
+    void FixedUpdate()
+    {
+        if (target == null)
+        {
+            Destroy(gameObject);
+        }
+
+        dir = (target.transform.position - transform.position).normalized;
+        transform.position += dir * speed;
+    }
 }

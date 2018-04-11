@@ -4,40 +4,53 @@ using UnityEngine;
 
 public class TowerScript : MonoBehaviour {
 
+    List<GameObject> enemiesInRange = new List<GameObject>();
+
     public GameObject bullet;
     public float shootInterval;
     public float damage;
     public float bulletSpeed;
+    public float towerRange;
+    public float towerBulletSpawnHeight;
 
     GameObject currentTarget;
     BasicEnemy targetEnemy;
     float timer;
 
-    void FixedUpdate()
+    void Start()
     {
-        timer += Time.deltaTime;
-
-        if (timer >= shootInterval)
+        CapsuleCollider range = GetComponent<CapsuleCollider>();
+        if (range != null)
         {
-            ShootAtEnemy(currentTarget);
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        targetEnemy = other.GetComponent<BasicEnemy>();
-        if (targetEnemy != null)
-        {
-            timer = shootInterval;
-            currentTarget = targetEnemy.gameObject;
+            range.radius = towerRange;
         }
     }
 
     void ShootAtEnemy(GameObject target)
     {
         GameObject tempBullet = Instantiate(bullet);
-        Rigidbody tempRB = tempBullet.GetComponent<Rigidbody>();
-        Vector3 targetVector3 = target.transform.position;
-        tempRB.AddForce(targetVector3 * bulletSpeed, ForceMode.Impulse);
+        tempBullet.transform.position = transform.position;
+        tempBullet.transform.position = new Vector3(transform.position.x, transform.position.y + towerBulletSpawnHeight, transform.position.z);
+        BulletScript tempBulletScript = tempBullet.GetComponent<BulletScript>();
+        tempBulletScript.target = target;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        BasicEnemy enemyCheck = other.GetComponent<BasicEnemy>();
+        if (enemyCheck != null)
+        {
+            // enemiesInRange[enemiesInRange.Count] = enemyCheck.gameObject;
+            enemiesInRange.Add(enemyCheck.gameObject);
+            ShootAtEnemy(other.gameObject);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (enemiesInRange.Contains(other.gameObject))
+        {
+            enemiesInRange.Remove(other.gameObject);
+        }
     }
 }
