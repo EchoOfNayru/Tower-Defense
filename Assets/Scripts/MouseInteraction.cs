@@ -134,7 +134,7 @@ public class MouseInteraction : MonoBehaviour {
         wallButton.interactable = true;
         towerSelected = false;
         towerButton.interactable = true;
-        currentLayerMask = -1;
+        currentLayerMask = 9;
     }
 
     public void SetBuilderToTower()
