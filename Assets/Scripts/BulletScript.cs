@@ -6,6 +6,7 @@ public class BulletScript : MonoBehaviour {
 
     public float speed;
     public GameObject target;
+    public TowerScript towerShotFrom;
 
     Vector3 dir;
 
@@ -15,8 +16,10 @@ public class BulletScript : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-
-        dir = (target.transform.position - transform.position).normalized;
-        transform.position += dir * speed;
+        else
+        {
+            dir = (target.transform.position - transform.position).normalized;
+            transform.position += dir * speed;
+        }
     }
 }

@@ -5,27 +5,21 @@ using UnityEngine;
 public class BasicEnemy : MonoBehaviour {
 
     public float moveSpeed = 0.2f;
+    public float startingHealth;
 
     PlayerBase playerBase;
     BulletScript bullet;
-    float timer;
+    float health;
 
 	// Use this for initialization
 	void Start () {
-        timer = 0;
+        health = startingHealth;
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-        timer += Time.deltaTime;
-        Debug.Log(timer);
 
-        if (timer >= 0.05)
-        {
-            transform.position -= transform.right * moveSpeed;
-            timer = 0;
-        }
-	}
+    void Update()
+    {
+        transform.Translate(-transform.right * moveSpeed * Time.deltaTime);
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -40,8 +34,28 @@ public class BasicEnemy : MonoBehaviour {
         bullet = other.GetComponent<BulletScript>();
         if (bullet != null)
         {
+            health -= bullet.towerShotFrom.towerDamage;
             Destroy(bullet.gameObject);
-            Destroy(gameObject);
+            if (health <= 0)
+            {
+                bullet.towerShotFrom.RemoveAndClean(gameObject);
+                Destroy(gameObject);
+            }
         }
     }
+
+    //have the enemy know where to go
+        //having knowledge of the grid
+            //grid has a clear path to the player base
+            //knowing which nodes have a building
+            //knowing if something is in front of the enemy
+            //which is the shortest path
+    
+
+    //if somethign is in front move up or down
+        //does up or down lead to the base
+            
+
+    //nodes with buildings are red
+    //walkable nodes are blue
 }

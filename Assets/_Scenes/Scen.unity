@@ -1215,6 +1215,8 @@ MonoBehaviour:
   wallButton: {fileID: 899125349}
   destroyButton: {fileID: 1822979371}
   towerButton: {fileID: 846298260}
+  walkable: {fileID: 2100000, guid: 6ab0001813e5390408c5883ee034b599, type: 2}
+  notWalkable: {fileID: 2100000, guid: b11c9007131faba46bc3fa24dd8aaa50, type: 2}
 --- !u!4 &1448387227
 Transform:
   m_ObjectHideFlags: 0

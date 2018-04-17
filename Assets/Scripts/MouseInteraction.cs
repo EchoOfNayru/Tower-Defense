@@ -10,6 +10,8 @@ public class MouseInteraction : MonoBehaviour {
     public Button wallButton;
     public Button destroyButton;
     public Button towerButton;
+    public Material walkable;
+    public Material notWalkable;
 
     bool wallSelected;
     bool destroySelected;
@@ -21,6 +23,7 @@ public class MouseInteraction : MonoBehaviour {
     TowerScript towerClicked;
 
     LayerMask currentLayerMask;
+    Renderer currentColor;
     
     // Use this for initialization
     void Start() {
@@ -66,29 +69,31 @@ public class MouseInteraction : MonoBehaviour {
                             Instantiate(tower, hit.collider.transform);
                             oceanNodeClicked.isBuilt = true;
                         }
+                        currentColor = oceanNodeClicked.gameObject.GetComponent<Renderer>();
+                        currentColor.material = notWalkable;
                     }
-
                     //destroy structure on click
-                    //wall
-                    wallClicked = hit.collider.GetComponent<WallScript>();
-                    if (wallClicked != null)
+                    if (destroySelected)
                     {
-                        if (destroySelected)
+                        //wall
+                        wallClicked = hit.collider.GetComponent<WallScript>();
+                        if (wallClicked != null)
                         {
                             oceanNodeClicked = wallClicked.gameObject.GetComponentInParent<OceanNodeScript>();
                             oceanNodeClicked.isBuilt = false;
                             Destroy(wallClicked.gameObject);
+                            currentColor = oceanNodeClicked.gameObject.GetComponent<Renderer>();
+                            currentColor.material = walkable;
                         }
-                    }
-                    //tower
-                    towerClicked = hit.collider.GetComponent<TowerScript>();
-                    if (towerClicked != null)
-                    {
-                        if (destroySelected)
+                        //tower
+                        towerClicked = hit.collider.GetComponentInParent<TowerScript>();
+                        if (towerClicked != null)
                         {
                             oceanNodeClicked = towerClicked.gameObject.GetComponentInParent<OceanNodeScript>();
                             oceanNodeClicked.isBuilt = false;
                             Destroy(towerClicked.gameObject);
+                            currentColor = oceanNodeClicked.gameObject.GetComponent<Renderer>();
+                            currentColor.material = walkable;
                         }
                     }
                 }
